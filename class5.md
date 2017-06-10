@@ -4,12 +4,12 @@
 ###### Bet
 
 - `Outcome` listát tartalmaz
-- egy meccshez több bet: 
+- egy meccshez több bet:
   - ki nyeri
   - hány gólt rúgnak összesen
   - Ronaldo hány gólt fog rúgni
   - win/lose,draw
-	
+
 ###### Result
 - annyi `Outcome` for hozzá tartozni, ahány bet van
 - nyertes `Outcome`-ok tartoznak a `Result`hoz

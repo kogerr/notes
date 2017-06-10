@@ -49,6 +49,8 @@ snapshots:
 3. modified - stage ->
 4. staged - commit -> unmodified
 
-
+### Basic Commands
+- `git init first-project` - létrejön könyvtár
+- `git log` - kiírja commitokat
 
 

@@ -29,7 +29,7 @@ látni futó process-eket is
 objektum hierarchia föltérképezése:
 Type Hierarchy View
 Open Call Hierarchy - végigmegy hívási láncon
-'toString', 'equals', 'hashCode' methods - 
+'toString', 'equals', 'hashCode' methods
 Source-ból vagy Ctrl-1, vagy Ctrl-Space
 push up, push down 	super vagy alosztályba nyom
 Ctrl-U		örökölt függvények és változók is
@@ -37,7 +37,7 @@ Ctrl-U		örökölt függvények és változók is
 # class 1
 autoboxing 127 felett
 hashcode - hashmap, ilyenek, binarysearch
-array objectként viselkedik: lehet null, constructorja is van, 
+array objectként viselkedik: lehet null, constructorja is van,
 az Object methodj
 protected - utánanézni
 strictfp - float. native - op.rendszerben értem

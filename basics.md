@@ -69,7 +69,7 @@ Reserved words...
 null does not equal .isEmpty
 a == b 		referenciaérték megegyezik
 a.equals(b)
-CharSequences: StringBuilder, StringBuffer,.... 
+CharSequences: StringBuilder, StringBuffer,...
 mutable
 StringBuffer szálbiztos (thread safe)
 StringBuilder gyorsabb
@@ -106,7 +106,7 @@ access modifiers allow for more but not less access (in subclass)
 Interface: pre-Java8: pure abstract classes
 
 ### Annotations
-use cases: 
+use cases:
 - for the compiler
 - compile-time / deployment time
 - runtime

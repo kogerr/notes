@@ -29,7 +29,7 @@
 Gyakorlat
 - nem lehet generikus array, vagy egyből cast-oljuk `(T[])`, vagy egyenként
 - vagy constructor-ban megadom a típust és `Array.newInstance(myType, 100)`
-- `<? extends BaseType>` - addAll methodnál pl. 
+- `<? extends BaseType>` - addAll methodnál pl.
 - Futásidőben konkrét típust fog jelölni
 
 Hierarchia:
@@ -50,7 +50,7 @@ public void sort(Comparator<? super T> comparator) {
 }
 ```
 - _contravariant subtyping_
-- __Get Put Principle__ wildcard szabály: 
+- __Get Put Principle__ wildcard szabály:
   - ha metódust fogok hívni az adott objektumon, (mint mondjuk a Comparatoron T típusú értékeket hasonlítok össze) oda `? super T` kell, hogy elfogadja
   - ha pedig a visszatérési értékét használom, akkor `extends`, pl `addAll` - a bejövő de ismeretlen típusú listáról azt várom el, hogy altípusa legyen
 

@@ -9,7 +9,7 @@ __LocalDate, LocalTime!__
 _LocalDate:_
 - `.now()`			kiírja yyyy-MM-dd formában
 - `.of(2017, 5, 9)`		szintén kiírja
-- `.ofYearDay(2017, 159)`	
+- `.ofYearDay(2017, 159)`
 
 _LocalTime:_
 - `.now()`

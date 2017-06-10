@@ -49,7 +49,7 @@ Elements:
 - state: rounded rectangle
 - decision point: open circle
 - termination point: circle with solid circle inside
-  
+
 ## Activity Diagram
 - procedural flow of control between 2+ class objects while processing activity
 - higher - business unit lvl / lower lvl - internal class actions
@@ -74,7 +74,7 @@ Can be grouped into swimlanes: lane = object
 - models the physical runtime
 
 ### Notation
-Like component diagram, plus: 
+Like component diagram, plus:
 
 node:
 - physical / virtual machine node
@@ -105,7 +105,7 @@ Classifiers: class, interface, data type, component
 - name / attributes / methods
 
 ### Attribute List
-format: 
+format:
 - `name : attribute type`
 - `name : attribute type = default value`
 
@@ -170,7 +170,6 @@ Notation: `Instance Name : Class Name`
 How class (or sg) is composed
 
 
-  
 # The Sequence Diagram
 
 [IBM Sequence Diagram](https://www.ibm.com/developerworks/rational/library/3101.html)

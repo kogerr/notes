@@ -3,7 +3,7 @@ szonkronnál blokkolva vagyok, amíg le nem fut
 lazán akarjuk csatolni a rendszereket, üzenetsor, queue szeparált
 absztrakció az adatbázis: a való világ leképezése, egy osztály is
 azonos metódus máshogy viselkedhet: polimorfizmus, mindegy melyik implementáció
-interface 
+interface
 
 _Composition:: kerék önmagában nem értelmes, végtagok magukban nem létezhetnek, magában nem jöhet létre
 ha szülő meghal, gyerek is meghal, pl ház szobái: ház szobái nem léteznek ház nélkül
