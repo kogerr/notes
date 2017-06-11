@@ -152,4 +152,121 @@ Pull request: leforkolt repository-ba pusholt commitra
 - ha azóta volt változtatás, merge-öljük a kettőt össze (non-fast-forward)
 - merge conflict feloldása:
   - 3-way merge: +base - az ahhoz képest történt változtatás kerül be
-  - ha nem tudja, kérdez
+  - ha nem tudja, kérdez: `master|MERGING` akkor:
+- `mergetool` és commit
+- `git branch --merged` / `git branch --no-merched`
+- `git branch -d branchname` / `git branch -D branchname`
+- `git branch -m newname` - átnevezi
+- `git show-branch` is kiírja brancheket és commitokat
+
+### Rebasing
+hogy a változtatások megjelenjenek masteren:
+- visszamegy az elágazásig
+- master utolsó commitjára aplikálja a branch commitjait (újrajátssza)
+- `git rebase targetbranchname`
+
+### Remotes
+- `.git/refs/remotes` könyvtárban vannak a remote-ok, remote-onként egy mappa
+- (`.git/refs/head`-ben a lokálisok)
+- `.git/config` fájlban van konfigurálva a remote:
+  - URL (távoli repo)
+  - fetch: a gépünkön hova fogja lefetch-cselni
+
+Mit lehet csinálni távoli branch-csel?
+- fetch-cselni
+- rebase-elni rá
+
+- fetch után a gépen is ott lesznek az új commit-ok, arra mutat az o/m
+- remote branchbe nem lehet commitolni
+- ha kicsekkoljuk az o/m-t: detached HEAD: commitra mutat
+- commit-ot is ki lehet checkout-olni
+- `git push remotename newremotebranchname`
+- `git push remotename localbranchname:newremotebranchname`
+- `git push remotename :remotebranchname` törli távoli branchet (local megmarad)
+- `git checkout remotebranchname` létrehoz local branch-et a remoteb.-ből
+
+### Rebase vs Merge
+- Rebase:
+  - __+__ nincs elágazás
+  - __+__ könnyű revertálni
+  - __-__ nem látszik, honnan és mikor indult
+  - __-__ nem működik együtt pull requesttel
+  - __-__ átírjuk a múltat
+- Merge
+  - __+__ nyomonkövethetőség
+  - __-__ tele tudja szemetelni a history-t merge commitokkal
+
+_Guideline_: soha ne rebase-elj olyan commitot, amit már föltoltál public repóba
+
+### Standard Git Branching
+- _decvelop_ branchen folyik a munka
+- _master_ branchen csak release-ek
+- _release_ branch release előtt, innen merge-ölünk developba. ez -> master
+- _hotfix_ branchek masterből release után
+- _feature_ branchek a developból, ezeket is vissza kell merge-ölgetni
+
+### Ancestry References
+lehet relatívan hivatkozni
+- `^` caret
+  - `git show HEAD^`: 1st parent of the commit
+  - `git show HEAD^2`: 2nd parent of the commit (többet is lehet merge-ölni)
+- `~` tide
+  - `git show HEAD~`: 1st parent of the commit
+  - `git show HEAD~2`: 1st parent of the 1st parent of the commit
+
+pl `git diff HEAD~2`
+
+### Undoing
+- `git commit --amend` change last commit (igazából új, mert immutable)
+- `git revert HEAD` csinál egy ellencommit-ot: kitörli hozzáadott sorokat
+- Reset:
+  - soft: visszaállítja HEADet az előző commitra, de meghagyja a változtatásokat
+  - mixed: minden non-staged állapotba kerül, amin volt módosítás
+  - hard: a working area is visszaáll
+- unmodify file: 
+  - `git checkout -- filename` visszaállítja a fájl állapotát az utolsó commitra
+  - `git checkout .` - visszaállítja az összes fájlt az utolsó commitra
+
+### Stashing
+félig elkészült dolgot nem akarsz commitolni, félrerakod polcra
+- `git stash`
+- `git stash apply` előszedi az utolsó stashelt módosítást és aplikálja
+
+### Tagging
+commit history pontjára címke, vissza tudsz oda lépni
+- pl amikor ügyfélnek kiraksz egy verziót
+- típusai:
+  - lightweight tag: mint branch de nem lehet módosítani
+  - annotated: létrejön object névvel, dátummal
+- branchet lehet létrehozni tagből
+- `git tag tagname`
+- `git tag -a tagname -m message` annotált
+- `git push remotename tagname` - ugyanúgy fölnyomni, mint brancheket
+- `git tag` - listázza tageket
+- `.git/refs/tags` mappában tárolja
+
+### Housekeeping
+- git tömörítve tárolja a fájlokat, minden objecthez van egy fájl object databas
+- loose object format
+- időnként "pack" fájlokba tömöríti - pl git push hatására, git gc, `git repack`
+- `git prune` remove unreachable objects
+
+### Git Directory
+- `hooks/` - kliensoldali hookok, pl kommit előtt ellenőrizzen valamit
+- `info` globálisan ignorált dolgokat itt is meg lehet adni
+- `logs` visszanézni, milyen parancsok lettek leduttatva
+- `objects` object database
+- `refs/` pointerek commit objectekre
+- `HEAD` working directory hova mutat
+- `config`
+- `index` staging area
+
+### Git Workflows
+- simán egyetlen repo
+- blessed repo, integration manager és saját public branch mindenkinek
+- Dictator & Lieutenant
+
+### Commands
+- plumbing commands (pl SHA-1 generálás, elkészíti bináris álományt)
+- porcelán commandok (pl git add) ezeket ismerjük
+
