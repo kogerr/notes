@@ -12,6 +12,7 @@
 - [Oracle's Generics](OracleGenerics.md)
 - [Universal Modeling Language (UML)](UML.md)
 - [GIT and Version Control](git.md)
+- [Design Patterns](DesignPatterns.md)
 
 ### Classes
 - [Class 4](class4.md)
