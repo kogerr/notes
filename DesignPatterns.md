@@ -137,8 +137,10 @@ return localEnv;
 - static inner singleton: lazy, de JVMre bízza, hogy csak egy lehet
 
 ### Other Vreational Patterns
-- Abstract Factory
+- Abstract Factory: kliens csak abstract factory-n függ
 - Prototype: másolással bővítsünk - deepCopy / shallow copy
+  - előre elkészíti valamennyire az objektumot, azt majd tudod magadnak 
+customizálni
 
 ## Structural Patterns
 kisebb objektumokat egy egységbe, felelősség szétosztása, flexibilis legyen
@@ -150,7 +152,7 @@ kényszerhelyzetet old meg, pl konnektor
 - már megírt kód felhasználása
 - Listenerek is: pl `ButtonListener` és `action` method közé
 - _wrapper_ mert burkolóként veszi körül az implementációs osztályt
-- Object Adapter: adapter tartalmazza az adaptálandó osztályt (composition)
+- Object Adapter: adapter tartalmazza az adaptálandó osztályt (**composition**)
   - megvalósítja az interface-t
   - kliens csak az interface-t látja
   - tipikusan delegációval
@@ -184,6 +186,7 @@ absztrakció elválasztása az implementációtól
   - ha absztakció és implementáció függetlenül változik
   - ha meg akarjuk osztani az implementáló objektumot
 - **Java Example**: `java.sql.DriverManager`
+  - ezer féle adatbáziskezelő, 1 szabvány, bridge fordít
 
 ### Decorator
 plusz felelősségek/műveletek hozzáadása dinamikusan
@@ -312,7 +315,7 @@ különböző algoritmusokat tudjunk definiálni és váltogatni
   - ha egy osztály több fajta viselkedést tud produkálni
 - __Java Examples__: `Comparator` - sort strategy, `awt.image.BufferStrategy`
 
-### Temaplate Method
+### Template Method
 egy vázat ad egy algoritmusnak és hagyjuk a leszármazottakra, hogyan töltik ki
 - a Strategy alternatívája, de öröklést használunk composition helyett
 - úgy tervezzük meg az ősosztályt, hogy subclassok tudják bővíteni
