@@ -79,4 +79,57 @@ a teszt, mint kliens
 #### Substitute Algorithm
 - tenni egy lépést hátra és lecserélni egy egyszerűbbre
 
+### Moving Features Between Objects
+#### Move Method
+- a vele együttjáró adatokat azt nem akarjuk-e a methoddal együtt mozgatni
+- de általában másik osztályhoz tartozó adatokon dolgozik
+- meghagyjuk az eredetit? ha igen, delegálás
+- figyelni kell, nincs-e öröklés, nincs-e felüldefiniálva
+#### Move Field
+- figyelni, pl ha `protected` a láthatósága, használja-e a leszármazott
+- encapsulate field: getterrel és setterrel érjük el
+#### Extract Class
+- ha nagyon sok attribútuma van, vannak, amik szorosan összekapcsolódnak
+- pl person és telefonszám
+- ha változik az osztály felelőssége, figyeljünk, hogy átnevezzük
+- szükséges lehet, hogy összekössük a két osztályt egy attribútummal
+#### Inline Class
+- Egy lusta osztályt be lehet helyettesíteni
+#### Hide Delegate
+- hogy a Demeter szabályt be tudjuk tartani, dependenciát eltüntessük
+#### Remove Middle Man
+- az előző fordítva
+#### Introduce Foreign Method
+- kiszervezve egy utility class-ba, w/ instance of the server class as argument
+- cél elkerülni az ismétlődést
+#### Intorduce Local Extension
+- örökölve megoldani
+- de akkor másik osztályt kell példányosítani és lehet, hogy változik az ős
 
+### Organizing Data
+#### Self Encapsulate Field
+- Getterrel-setterrel elérni az attribútumokat: csk úgy jó, ha nincs mindenhez
+#### Replace Data Value with Object
+- primitive obsession: van, hogy csak valami primitívet használnak....
+- helyetadni a műveleteknek
+#### Change Value to Reference
+- megengedjük, hogy ne legyenek immutable-ök
+#### Change Value to Reference
+- ha rájövünk ha csak valami értéket tárol
+#### Replace Array with Object
+- tömbben különböző értékek.. hozzunk létre rá egy osztályt (koordináták pl)
+#### Replace Magic Number with Symbolic Constant
+- elnevezni a konstanst a jelentése után
+#### Encapsulate Field
+- külső szemlélő számára elrejtjük a publikus attribútumokat
+#### Encapsulate Collection
+- ha csak olvasható nézetet akarunk egy kollekcióra, nem adhatunk rá gettert
+- kell rá írni add/remove methodokat
+#### Replace Type Code with Type / Subclass
+- típuskódokat kerülni kell, hogyha módosíthatják a működést
+- enumba vagy származott osztályokba kiszervezni
+#### Replace Type Code with Strategy
+- hogyha dinamikusan változhat
+#### Replace Subclass with Fields
+- van, hogy a subclassok túl nagy bonyodalmat keltenek, nincs rájuk szükség
+- egyszerűbb, hogyha ősosztályban eltároljuk valahogy
