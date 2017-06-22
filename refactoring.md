@@ -122,6 +122,7 @@ a teszt, mint kliens
 - elnevezni a konstanst a jelentése után
 #### Encapsulate Field
 - külső szemlélő számára elrejtjük a publikus attribútumokat
+- listákat ne adjuk ki
 #### Encapsulate Collection
 - ha csak olvasható nézetet akarunk egy kollekcióra, nem adhatunk rá gettert
 - kell rá írni add/remove methodokat
@@ -133,3 +134,8 @@ a teszt, mint kliens
 #### Replace Subclass with Fields
 - van, hogy a subclassok túl nagy bonyodalmat keltenek, nincs rájuk szükség
 - egyszerűbb, hogyha ősosztályban eltároljuk valahogy
+
+### Óra
+- high level ~: a struktúrát változtatjuk, toolok nem csinálják meg helyettünk
+- _Ctrl+S_ minden final
+- gondoljuk meg, melyik irányba van a hivatkozás
