@@ -132,10 +132,70 @@ a teszt, mint kliens
 #### Replace Type Code with Strategy
 - hogyha dinamikusan változhat
 #### Replace Subclass with Fields
-- van, hogy a subclassok túl nagy bonyodalmat keltenek, nincs rájuk szükség
+- van, hogy a s ubclassok túl nagy bonyodalmat keltenek, nincs rájuk szükség
 - egyszerűbb, hogyha ősosztályban eltároljuk valahogy
 
 ### Óra
 - high level ~: a struktúrát változtatjuk, toolok nem csinálják meg helyettünk
 - _Ctrl+S_ minden final
 - gondoljuk meg, melyik irányba van a hivatkozás
+
+### Simplifying Conditional Expressions
+#### Decompose Conditional
+- kiszervezni a feltételt egy methodba
+- adjunk neki beszédes nevet
+#### Consolidate Conditional Expressions
+- ha ugyanaz a kimenete több feltételnek, kiszervezhetjük egybe
+#### Consolidate Duplicate Conditional Expressions
+- ha mindkét ág végén ott van ugyanaz, tegyük a conditionalön kívülre
+#### Replace Conditional with Polymorphism
+- pl switchcase hgelyett..
+- figyelni kell, hogy ne használjuk az `instanceof` kulcsszót
+- előfordul, hogy a láthatóságon is kell változtatni
+#### Introduce Null Object
+- Replace the null value with a null object
+- Motivation: You have repeated checks for a null value
+- Note: the null objects can be shared
+- ha gyakori a null ellenőrzés, bevezethetünk 1 spec. objektumot (Null Customer)
+- ami tartalmazhatja azokat a speciális eseteket, amikor null checkre lenne szükség
+
+### Making Method Calls Simpler
+jó interfacehez (APIhoz)
+#### Rename Method
+- jó neveket használjunk (nehéz)
+#### Add/Remove Parameters
+- paraméterlista: jobb letávolítani
+- eclipse: change method signature
+#### Separate Query from Modifier
+- ha van visszatérési értéke: Query - akkor ne legyen mellékhatása
+- többszálúságnál van atomi kivétel
+#### Parameterize Method
+- a method nevébe, vagy a paraméterbe legyen föltüntetve valami?
+- jobb szokott lenni, hogyha parameterben
+- ha flag boolean, akkor jobb két külön methodot létrehozni
+#### Replace Parameter with Explicit Methods
+- külön method legyen inkább
+#### Preserve Whole Object
+- ha egy object több adattagját átadjuk, akkor inkább adjuk át az egészet
+- egy hátránya lehet: néha dependenciát vezet be
+#### Replace Parameter with Method
+- a paramétert helyettesítsük methoddal - tipikusan flag típusú
+#### Introduce ParameterObject
+- ha nagyon sok paraméterünk van, megfontolhatjuk, hogy plusz p.o.-t vezetünk be
+- pl start, end helyett range
+#### Remove Setter Method
+- a setterektől szeretünk megszabadulni, jobb ha az objektumon belül történik
+- a field should be set at creation time
+- create immutable
+#### Hide Method
+- a láthatóságra is figyelni kell, hogy szükség van-e rá
+- privátra állítani
+#### Replace Constructor with Static Factory Method
+- more than simple construction
+- tudunk nevet adni neki
+- nem muszáj visszatérnie egy adott típussal
+#### Replace Error Code with Exception
+- régi berögződés visszatérni 0val
+- inkább Runtime Exception
+#### Replace Exception with Test
+- inkább próbáljuk elkerülni az exceptionöket
