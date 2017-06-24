@@ -199,3 +199,46 @@ jó interfacehez (APIhoz)
 - inkább Runtime Exception
 #### Replace Exception with Test
 - inkább próbáljuk elkerülni az exceptionöket
+
+### Dealing with Generalization
+#### Pull Up Field
+Ha két leszármazott osztályban is szerepel ugyanaz, fölhozzzuk az ősosztályba
+#### Push Down Field
+refused bequest problémája áll fenn: nincs szüksége egy subclassnak valamire
+#### Pull Up Method
+de hogyha fölhozunk egy methodot, a hozzá tartozó attribútumokat/methodokat is
+#### Push Down Method
+szintén attribútumokkal együtt
+#### Pull Up Constructor
+ha ugyanaz a rész ismétlődik az alosztályokban, kerüljük el a kódismétlést
+#### Extract Subclass
+- Egy osztályból ki tudunk bontani egy ős/al osztályt
+- akkor érdemes megteni, ha lesz testvérosztálya
+#### Extract Subclass
+ősosztályba szervezve elkerüljük a kódismétlést
+#### Extract Interface
+privát vagy protected methodokat nem fogja
+#### Collapse Hierarchy
+- két öröklési viszonyban álló osztályból egyet csinálunk
+- fölösleges leszármaztatás/öröklés van, vagy áttérünk pl Strategy mintára
+#### Replace Inheritance with Delegation
+a legtöbb design pattern: ne öröklést használjunk, hanem composition-t
+#### Replace Delegation with Inheritance
+erre azért sokkal kevesebb lehetőség van, a kompozíció megfelelőbb szokott lenni
+
+## Refactoring in Eclipse
+Action | keybinding
+--------------- | ---------------
+Show key assist | `Ctrl + Shift + L`
+Organize imports | `Ctrl + Shift + O`
+Format code 	| `Ctrl + Shift + F`
+Open type 	| `Ctrl + Shift + T`
+Type Hierarchy 	| `Ctrl + T`
+Go to 		| `Ctrl + click`
+References 	| `Ctrl + Shift + G`
+Refactorings 	| `Alt + Shift + T`
+Source 		| `Alt + Shift + S`
+Move 		| `Alt + Shift + V`
+Abstract Method | `Alt + Shift + M`
+Intline 	| `Alt + Shift + I`
+Extract Local Variable | `Alt + Shift + L`
