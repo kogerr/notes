@@ -18,7 +18,7 @@ delegálni: másik objektummal megoldatni
 
 ## Prerequisits
 - először statikus inicializációs blokkok futnak le, dinamikus, konstruktor
-- ősnek és alsztálynak is lefut a konstruktora
+- ősnek az init.b. és constructor, aztán alosztálynak
 
 - az anonymus class igaából `extends`
 - privát konsruktorú ősosztályt nem lehet extendelni, mert alosztály nem hívja
@@ -33,7 +33,7 @@ delegálni: másik objektummal megoldatni
 Motivation
 - absztrakcióktól függés - interface, osztály helyett
 - new kulcsszótól és konkrét oszálytól függés megszűntetése
-- növeli a rugalmasságotiensnek nem kell ezzel törődnie
+- növeli a rugalmasságot, kliensnek nem kell ezzel törődnie
 
 ### Builder
 elkülőníteni az objektum felépítését attól, hogy hogyan van reprezentálva
@@ -56,7 +56,7 @@ elkülőníteni az objektum felépítését attól, hogy hogyan van reprezentál
 - el elehet nevezni a konstruktor paramétereket
 - lehet validálni a paramétereket
 
-Javában pl:
+#### Java Példák
 - StringBuilder
 - StringBuffer
 - ByteArrayOutputStream
@@ -136,7 +136,7 @@ return localEnv;
 - double check - hogy ne kelljen mindig szinkronizálni
 - static inner singleton: lazy, de JVMre bízza, hogy csak egy lehet
 
-### Other Vreational Patterns
+### Other Creational Patterns
 - Abstract Factory: kliens csak abstract factory-n függ
 - Prototype: másolással bővítsünk - deepCopy / shallow copy
   - előre elkészíti valamennyire az objektumot, azt majd tudod magadnak 
@@ -192,7 +192,7 @@ absztrakció elválasztása az implementációtól
 plusz felelősségek/műveletek hozzáadása dinamikusan
 - örökléssel semmiképp nem lehet, mert statikus
 - itt is **kompozíció**val
-- pl: scrollozható panelben elhalyezni valamit - csak amikor kell
+- pl: scrollozható panelben elhelyezni valamit - csak amikor kell
 - pl: stramek egymásba ágyazása (kiírás elé csomagolások dekorálják)
 - egy közös interface vagy absztrakt ősosztály alá pakolja az adott komponenst,
 meg a dekorátort, ami plusz felelősséget ad

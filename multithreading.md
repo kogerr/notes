@@ -40,7 +40,7 @@ A programon belül szinkronizálni kell a memóriához való hozzáférést
 - a memória kontroller viszaad 1-es flaget - azt hiszi a másik CPU h jól számolt
 
 ### The Problem and the Solution
-a baj: shared mutable date -> szinkronizálni kell. ez biztosít:
+a baj: shared mutable data -> szinkronizálni kell. ez biztosít:
 - rendezést - műveletek sorrendje
 - visibility - látható lesz-e egy másik szálban
 
