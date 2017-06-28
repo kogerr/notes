@@ -153,3 +153,19 @@ mikor használunk szinkronizált metódust vagy mikor használjuk a thist
 - 64 bites long
 - 32 bites JVM-en két számítás lesz
 - ezt is megoldja a volatile
+
+### Final
+lehet mező/attribute, method parameter, class vagy függvény is `final`
+- (final static belevéshető a bytecode-ba)
+- immutable:
+  - create new instance instead of modification
+  - persistent data structures
+
+- InvariantDemo: inmutable class gyorsabb, mert nem várnak egymásra accessorok
+- ha sok szál verseng egy object-ért, lassabb, mintha kizárjuk a szinkronizációt
+- ha erős a versengés a lock-okért, lehet, h immutable object-tel gyorsabb
+
+### Problems and Antipatterns
+- Random bahaviour: ha hibás a szinkronizáció látszólag láthatatlan működésének
+- Deadlock: két vagy több szál vál valamire, de senki nem tud tovább lépni
+- Livelock: mindkét ember kilép a másik oldalra
