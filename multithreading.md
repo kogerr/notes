@@ -169,3 +169,59 @@ lehet mező/attribute, method parameter, class vagy függvény is `final`
 - Random bahaviour: ha hibás a szinkronizáció látszólag láthatatlan működésének
 - Deadlock: két vagy több szál vál valamire, de senki nem tud tovább lépni
 - Livelock: mindkét ember kilép a másik oldalra
+- Performace bottlenecks: olyat írunk, amitől nagyon lassú lesz
+- Unsafe publication: objektumok nem kellően inicializálva láthatóvá válnak más
+threadek számára. Félig kész object-ek láthatóak valahol.
+
+### Random Behaviour
+Nem szabad olyan objektumra szinkronizálni, aminek az értéke aztán megváltozhat
+- mert nem a mező nevére szinkronizálunk, hanem a referenciára
+
+### Race Condition
+Errors due to bad synchronization:
+- lost updates
+- inconsistent state
+- lost notification: pl wait-notify-nál ne legyen előbb a notify mint a wait
+- double-checked locking
+
+példa inkonzisztens állapotra:
+- egyik szál módosítja az x és y értékét, a másik olvassa
+- rosszul van szinkronizálva - csak `y` szinkronizált
+- kiolvashatja az egyik módosított értéket és a másikból a régit
+- ilyenkor vagy előjön a baj, vagy nem, nem kiszámítható
+
+példa PlusPlusDemo - lost updates:
+- elindít két szálat, a szálak szólnak ha végeztek és beállítják `Semaphore`-t
+- 50 millióig kéne elszámoljon kétszer, de csak 50mil körüli az érték
+- a szálak látják, hogy hogy áll az érték indulás előtt, és a végén visszaadják
+- `volatile`-lal 100x lassabb lett, de nem lett sokkal jobb eredmény
+- `volatile`-lal mindig elmennek a memóriába egy értékért, de megint felülírják
+- guard Object a megoldás
+- a synchronized block csak akkor engedi el, amikor időszelete lejár
+
+példa Double-checked locking:
+- singleton object-nél újra megnézi, hogy azóta se hozta-e létre senki
+- biztonságos kellene, hogy legyen
+- de lehet, hogy constructor futása közben jön a másik szál
+- megoldás: szinkronizált method, vagy nem lazy, vagy Pugh-féle Singleton-holder
+
+pugh:
+- `static class Holder` benne `static final` field
+- de a belső osztály csak `getInstance()`-re töltődik be, szóval igazából Lazy
+- jó, ha valamilyen konfigurációkat be kell tölteni mielőtt létrehozzuk
+- ha csak statikus mező, mert ott kell legyen, amikor az osztály betóltődik
+- így viszont meírhatunk előtte statikus konfigurációs mezőket
+- villám gyors és biztos is
+
+### Performance Bottlenecks
+- synchronization costs: szerverekben szokott előjönni...
+- hogyha túl sokáig van nálad egy monitor, feltartja a többi ember kódját
+  - ne legyenek lassú hívások...
+  - lehetőleg ne legyen sleep/wait/block...
+  - pl loggolást is ha lehet, ne synchronized block-ban
+(lehet, hogy másik szerver végzi a loggolást)
+- holdiong too many locks - ha sok lock van, érdemes sorrendet előírni
+- too strict locking (readers vs writers) - ha olvasó a többi olvasót is pl.
+
+### Unsafe Publication
+előbb adja át magát (`this`) az event managernek, minthogy lefutna a constructor
