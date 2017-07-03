@@ -220,7 +220,7 @@ Nem szabad olyan objektumra szinkronizálni, aminek az értéke aztán megválto
   - lehetőleg ne legyen sleep/wait/block...
   - pl loggolást is ha lehet, ne synchronized block-ban
 (lehet, hogy másik szerver végzi a loggolást)
-- holdiong too many locks - ha sok lock van, érdemes sorrendet előírni
+- holding too many locks - ha sok lock van, érdemes sorrendet előírni
 - too strict locking (readers vs writers) - ha olvasó a többi olvasót is pl.
 
 ### Unsafe Publication
@@ -235,7 +235,7 @@ Safe publication
 - thread safe library classes (`AtomicReference`, `BlockingQueue`, ...)
 
 ### Starting Thread Subclass in constructor
-kerülendő constructorban elindítni egy szálat (önmagát)
+kerülendő constructorban elindítani egy szálat (önmagát)
 - leszármazott osztály megpróbálja kétszer elindítani a szálat, nem lehet
 - már fut a szál, pedig még nincs beállítva field...
 
@@ -296,7 +296,7 @@ exercise SleepingWithLockHeldDemo
 - ha muszály elkapni:
   - return special result
   - return normal result, but interrupt thread
-- példa: 
+- példa:
   - boolean-nal jegyzi, hogy volt interrupt, de megy tovább
   - a végén `interrupt()`-ot hív magára
   - így a szülő le tudja kérdezni, és látja hogy volt interrupt
@@ -541,3 +541,51 @@ Main Types
   - `invokeAny(...)` - több feladatot tesz be, az első eredményét adja vissza
   - `Future<T>` - jövőbeli eredmény, lehet kérdezni, hogy kész van-e már
 - ThreadFactory - object, ExecutorService hívja (szál prioritása, neve, stb)
+
+##### ExecutorService
+- ThreadPoolExecutor: hozzá lehet adni queue-t feladatoknak (FIFO/prioritásos..)
+- ScheduledExecutorService: időzítést lehet megadni
+- ForkJoinPool: automatikus feladatszétosztás/párhuzamosítás
+- Creation
+  - Factory methods in `Executors` - simple
+  - Direct instantiation - complete control
+  
+example ForkJoinMax:
+- `RecursiveTask extends ForkJoinTask`
+- maximumot keres. ha túl nagy a tömb szétvágja két részre
+- `left.fork()` - ExecutorService elkezd ezen az új szálon dolgozni
+- `Math.max(right.compute(), left.join())`
+- feladatokról beszélünk csak, nem szálakról
+- ForkJoin kétszer olyan gyors volt
+
+Shutdown support
+- methods:
+  - `shutdown()` - ne kezdjen bele újba
+  - `shutDownNow()` - interruptot is küld
+  - `awaitTermination()` - megvárni, míg ténylegesen befejeződik a végrehajtás
+  - `isShutdown()`, `isTerminated`
+- rejection policy: `RejectionExecutionHandler` - ha túl van terhelve pool
+  - abort - exceptiont dob, ha új feladatot kap
+  - caller runs - hívó álljon be, és csinálja meg a feladatot
+  - discard - nem csinál semmit új feladattal
+  - discard oldest (not for PriorityQueue)
+
+`Executors` Factory Methods For
+- fixed number of threads (even single threaded)
+- dynamically changing number of threads (cached) - min/max
+- scheduled
+
+CompletionService
+- Producers submit tasks to work queue
+- Workers take tasks from work qurur
+- Consumert take completed tasks from result queue
+
+### What more is out there?
+- Java 8 paralell streams
+- Scala: filter/lambda/forEach szerűen beadhatók funkciók
+- Actor framework-ök: aszinkron a működés...
+- Software Transactional Memory (STM) - újraszámol, ha módosult az érték
+
+### Double-Ended Queue
+- ha egy szálnak nincs munkája, lophat a másik szál végéről munkát
+- megoldható, hogy terhelés szétoszlik a rendszerben
