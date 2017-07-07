@@ -1,4 +1,4 @@
-#Effective Java
+# Effective Java
 ### Effectiveness and Performance
 - sok a karbantartási munka, jobb a clean kód, ami nem romilik el máshol
 - a teljesítményt hatékony kóddal érjük el, mint mellékhatás
