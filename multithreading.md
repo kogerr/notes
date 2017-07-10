@@ -278,10 +278,10 @@ exercise SleepingWithLockHeldDemo
 - minden szálhoz tartozik egy beépített interrupted flag
 - be lehet állítani aaz `interrupt()` hívásával az objecten
 - ha a szál bemegy egy sleep/wait/más methodba, `InterruptedException`t dob erre
-- nem vész el, akkor is, ha az interrupt előbb jött (szemben `notify`-jal)
+- nem vész el, akkor se, ha az interrupt előbb jött (szemben `notify`-jal)
 - detection:
   - `InterruptedException` (clears flag)
-  - `Thread.interrupted()` (clears flag) **?**
+  - `Thread.interrupted()` (clears flag)
   - `aThread.isInterrupted()` (unchanged)
 
 #### Passzív szál (alatt azt érti: alszik, amíg egy feltétel nem teljesül)
@@ -289,13 +289,16 @@ exercise SleepingWithLockHeldDemo
 - visszaadhat egy különleges visszatérési értéket
 - saját magán ismét bebillentheti interrupt flaget
 
-#### Interrupting a Busy Thread: lehet a beépített flag-et ellenőrizni
+#### Interrupting a Busy Thread:
+lehet a beépített flag-et ellenőrizni
+- `while(!Thread.interrupted())`
+- `while(!Thread.currentThread().interrupted())`
 
-#### Propagating the Interrupted Status: **?**
+#### Propagating the Interrupted Status:
 - ha ki akarsz lépni, ne kapd el az exception-t, szülő megkapja
 - ha muszály elkapni:
   - return special result
-  - return normal result, but interrupt thread
+  - return normal result, but interrupt thread, hogy a szülő is lássa a flaget
 - példa:
   - boolean-nal jegyzi, hogy volt interrupt, de megy tovább
   - a végén `interrupt()`-ot hív magára
@@ -308,9 +311,9 @@ Collection-be, amit földolgoz, tesz egy elemet, amire megszakad
 #### Dirty Tricks
 néhány művelet nem úgy van megtervezve, hogy félbe lehessen szakítani
 - ha `java.io` hálózati socketből olvasna, de blokkol, nem jön adat:
-  - csak úgy tud kitörni, ha bezárja
-  - kap SocketException-t
-- `java.nio` be lehet zárni a csatornát.. van InterruptibleChannel
+  - csak úgy tud kitörni, ha bezárja a socketet
+  - kap a szál, aki olvasna egy SocketException-t
+- `java.nio`-ban is be lehet zárni a csatornát, de van InterruptibleChannel
 - Asynchronous I/O - értesítenek, amikor elkészül egy művelet - wakeUp method...
 
 ## Library Support
@@ -318,7 +321,7 @@ néhány művelet nem úgy van megtervezve, hogy félbe lehessen szakítani
 a szálhoz kötjük az állapotot
 - Thread-confined values don't need synchronization:
   - stack confinement: local variables (tipikusan hívási paraméterek)
-  - Thread-specific value: `ThreadLocal` (like a Map keyed by Threads)
+  - Thread-specific value: `ThreadLocal` (like a Map keyed by Threads) *?*
 
 ThreadLocalDemo
 
@@ -328,7 +331,7 @@ ha több szálból akarunk elérni egy Collectiont:
 - ne sérülhessen az adatszerkezet mert többen módosítják egyszerre
 - lehetne szinkronizálni rá, de kényelmetlen lenne
 - vannak, amik eleve ilyenek voltak, pl Vector
-- `Collections.synchroized...()` - add... methodokat synchronizálva hajtja végre
+- `Collections.synchroized...()` - add/get/remove... methodok synchronizáltak
 
 ##### ConcurrentEventVenue1:
 - `ConcurrentModificationException`
@@ -357,9 +360,9 @@ jobban föl vannak készítve a párhuzamos működésre, mint synchronized
   - feltételesen hajtják végre a módosítást
 - Fail-fast helyett fail-safe iterators: végigmegy, max nem tükrözi módosítást
 - Better performance than simple locking
-- pl: `CopyOnWrinteArrayList` iteráláskor módosítást másolaton hajtja végre
-- `CopyOnWrinteArraySet`
-- `ConcurrentSkipListSet`: **?**
+- pl: `CopyOnWriteArrayList` iteráláskor módosítást másolaton hajtja végre
+- `CopyOnWriteArraySet`
+- `ConcurrentSkipListSet`:
   - kicsit fára hasonlít és *heudisztikus* (?)
   - előnye: compare-and-exchange műveletekkel hatékonyan lockolás nélkül tud...
 - `ConcurrentHashMap`, `ConcurrentSkipListMap`
@@ -409,7 +412,7 @@ TransferQueue: speciális blocking Queue: producer értesül, h consumer kivett
   - `Collections.asLifoQueue(deque)` Stack-et csinál Deque-ből
 - PriorityQueue
 - DelayQueue
-- SynchronousQueue: tesztelésnél. BlockingQueue, kapacitása 0. randevú szrű
+- SynchronousQueue: tesztelésnél. BlockingQueue, kapacitása 0. randevú szerű
 
 ### Atomic Operations
 Check-then-modify:

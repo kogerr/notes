@@ -18,7 +18,7 @@
 - visszatérhet altípussal/speciális implementációt: emptyList, stb
 - null check.. validálás
 - "hátrányok":
-  - calasses woth only static factories cannot be subclassed
+  - calasses with only static factories cannot be subclassed
   - not readily distinguishable from other static methods
 
 ### Builder - If Many Constructor Parameters

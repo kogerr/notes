@@ -16,6 +16,8 @@
 5. [GIT and Version Control](git.md)
 6. [Design Patterns](DesignPatterns.md)
 7. [Refactoring](refactoring.md)
+8. [Multithreading](multithreading.md)
+9. [Effective Java](effective_java.md)
 
 ### Classes
 - [Class 4](class4.md)
