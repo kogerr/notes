@@ -428,7 +428,8 @@ e.g. `chmod 640 file1`
 - group: read
 - all other users: no rights
 
-----|---
+` ` |
+--- | ---
 `r` | 4
 `w` | 2
 `x` | 1
@@ -560,7 +561,7 @@ Please call 555-1234 and wait for the men in black to arrive.
 #### File Commands
 ##### File Administration
 
-command					| ``
+command					| ` `
 --------------------------------------- | -------------
 `ls [option(s)] [file(s)]`		| **list**
 `ls -l`					| detailed
@@ -601,7 +602,7 @@ command					| ``
 
 ##### Commands to Access File Contents
 
-command 				| ``
+command 				| ` `
 --------------------------------------- | -------------
 `cat [option(s)] file(s)`		| display the contents
 `cat -n`				| Numbers the output on the left margin
@@ -616,7 +617,7 @@ command 				| ``
 
 ##### File Systems
 
-command 				| ``
+command 				| ` `
 --------------------------------------- | -------------
 `mount [option(s)] [<device>] mountpoint` |  mount any data media
 `mount -r`				| mount read-only
@@ -626,8 +627,158 @@ command 				| ``
 #### System Commands
 ##### System Information
 
-command 				| ``
+command 				| ` `
 --------------------------------------- | -------------
-``				| 
-``				| 
+`df [option(s)] [directory]`		| disk free (space)
+`df -H`					| human-readable format
+`df -t`					| type of filesystem
+`du [option(s)] [path]`			| disk space occupied
+`du -a`					| each file
+`du -h`					| 
+`du -s`					| calculated total size
+`free [option(s)]`			| RAM and swap space usage
+`free -b`				| in bytes
+`free -k`				| in kilobytes
+`free -m`				| in megabytes
+`date [option(s)]`			|
 
+##### Processes
+
+command 				| ` `
+--------------------------------------- | -------------
+`top [options(s)]`			| running processes
+`ps [option(s)] [process ID]`		| your own programs or processes
+`kill [option(s)] process ID`		| sends a TERM signal
+`kill -9`				| process name, not ID as argument
+
+##### Network
+
+command 				| ` `
+--------------------------------------- | -------------
+`ping [option(s)] host name|IP address`	| ping
+`ping -c`				| number of packages to send
+`ping -f`				| flood ping
+`ping -i`				| interval between two data packages
+`nslookup`				| queries to DNS servers
+`telnet [option(s)] hostname / IP address`| 
+
+Miscellaneous
+
+command 				| ` `
+--------------------------------------- | -------------
+`passwd`				| 
+`su`					| login w/ different username
+`halt [option(s)]`			| shut down
+`reboot [option(s)]`			| immediate reboot
+`clear`					| clear console
+
+## Services
+```bash
+# list running services
+service --status-all
+service --status-all | more
+service --status-all | grep ntpd
+service --status-all | less
+service httpd status # see one in detail
+chkconfig --list # List all known services (configured via SysV) (not working)
+
+# turn services on/off
+ntsysv 
+chkconfig service off
+chkconfig service on
+chkconfig httpd off
+chkconfig ntpd on
+chkconfig --list # to list SysV services only
+
+# To list systemd services 
+systemctl
+systemctl | more
+systemctl | grep httpd
+systemctl list-units --type service
+systemctl list-units --type mount
+systemctl list-unit-files # to list all services
+```
+
+## SSH Tunneling
+- Secure Shell server
+- allows you to run terminal commands
+- allows you to tunnel a port between your local system and a remote SSH server
+- encrypted SSH connection: can’t be monitored or modified in transit
+- `ssh` on Linux, macOS, other UNIX-like OS
+- PuTTY on windows
+
+### Local Port Forwarding
+Make Remote Resources Accessible on Your Local System
+- access local network resources (not exposed to the Internet)
+- example database:
+  - configured to accept connections from the local office network
+  - SSH server allows connections from outside
+  - establish an SSH connection
+  - tell the client to forward traffic from a specific port
+  - to address and port of database
+  - SSH server forwards traffic
+  - CLI/GUI work too
+- for local forwarding:
+`ssh -L local_port:remote_address:remote_port username@server.com`
+- e.g.: `ssh -L 8888:192.168.1.111:1234 bob@ssh.youroffice.com`
+  - can access database at `http://localhost:8888`
+  - traffic to 8888 will be tunneled to `192.168.1.111:1234`
+- example both SSH and database on the same machine:
+  - only accepts connections on port 22
+  - database on port 1234
+  - SSH server forwards to itself as `localhost`
+  - connecting from 8888 port of local machine
+  - `ssh -L 8888:localhost:1234 bob@ssh.youroffice.com`
+
+### Remote Port Forwarding
+Make Local Resources Accessible on a Remote System
+- example:
+  - running a web server on local PC
+  - PC is behind a firewall - no incoming traffic to the server software
+  - access a remote SSH server
+  - connect and use remote port forwarding
+  - forward a port on the SSH server to address and port on local PC
+  - anyone with access to the SSH server: traffic will get tunneled on that port
+- `ssh -R remote_port:local_address:local_port username@server.com`
+- e.g.: `ssh -R 8888:localhost:1234 bob@ssh.youroffice.com`
+  - 1234 on local PC
+  - port 8888 on SSH server
+  - server's address: ssh.youroffice.com
+  - your username on the SSH server: bob
+
+### Dynamic Port Forwarding
+Use Your SSH Server as a Proxy
+- similarly to a proxy or VPN
+- SSH client creates a SOCKS proxy (on SSH server)
+-  `ssh -D local_port username@server.com`
+- e.g. `ssh -D 8888 bob@ssh.yourhome.com`
+  - SSH server: ssh.yourhome.com
+  - your username on the SSH server: bob
+  - port 8888 on the current PC
+
+## Pipes
+redirection: send the output of one program to another program
+- transferring of standard output
+- destination: another program, a file or a printer
+- instead of the display monitor
+- stdout of CLI
+
+- a pipeline of commands: temporary direct connection
+- command line programs: filters
+- allows programs to operate simultaneously
+- permits data to be transferred continuously
+- syntax: `command_1 | command_2 [| command_3 . . . ]`
+- e.g. `dmesg | less`
+- output redirection operator: `>`
+
+```bash
+dmesg > tempfile1
+tempfile1 > less # ?
+dmesg | sort -f | less
+```
+
+- `-f` disregard case while sorting
+- `ls | wc -l` - word count (`-l` - counts number of lines)
+- `echo -e "orange \npeach \ncherry" | sort > fruit` (`-e` - "\n" as new line)
+- `cat * | grep "Linux" | grep -v "UNIX" | wc -l`
+- MS-DOS uses a temporary buffer file
