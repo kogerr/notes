@@ -6,3 +6,5 @@
 - [ ] japán kávézó
 - [ ] szépművészeti román csarnok
 - [ ] gyoza sütés
+
+- https://frappeguide.hu/eves/budapest/vegan
